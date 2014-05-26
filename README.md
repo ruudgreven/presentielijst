@@ -24,10 +24,11 @@ id;lastname;insertion;firstname;
 ];
 ```
 
+***
 ## GET /students.__format__
 Returns a list of all students in the given format
 
-## Supported formats
+### Supported formats
 JSON and CSV
 
 ### Output example
@@ -38,10 +39,11 @@ JSON and CSV
 ];
 ```
 
+***
 ## GET /students/__id__.__format__
 Returns a list of the student with id __id__ in the given format
 
-## Supported formats
+### Supported formats
 JSON and CSV
 
 ### Output example
