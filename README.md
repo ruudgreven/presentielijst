@@ -24,6 +24,7 @@ id;lastname;insertion;firstname;
 ];
 ```
 
+
 ***
 ## GET /students.__format__
 Returns a list of all students in the given format
@@ -38,6 +39,7 @@ JSON and CSV
 {"id":"34567","firstname":"Henk","insertion":"van der","lastnaam":"Tillaart"}
 ];
 ```
+
 
 ***
 ## GET /students/__id__.__format__
