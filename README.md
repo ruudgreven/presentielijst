@@ -19,7 +19,7 @@ id;lastname;insertion;firstname;
 ### Output example
 ```json
 {"status": "ok", "response":[
-{"id":"123456","firstname":"Ruud","insertion":"","lastnaam":"Greeven"},
+{"id":"123456","firstname":"Ruud","insertion":"","lastnaam":"Greven"},
 {"id":"34567","firstname":"Henk","insertion":"van der","lastnaam":"Tillaart"}
 ]};
 ```
@@ -35,7 +35,7 @@ JSON and CSV
 ### Output example
 ```json
 {"status": "ok", "response":[
-{"id":"123456","firstname":"Ruud","insertion":"","lastnaam":"Greeven"},
+{"id":"123456","firstname":"Ruud","insertion":"","lastnaam":"Greven"},
 {"id":"34567","firstname":"Henk","insertion":"van der","lastnaam":"Tillaart"}
 ]};
 ```
@@ -51,7 +51,7 @@ JSON and CSV
 ### Output example
 ```json
 {"status": "ok", "response":[
-{"id":"123456","firstname":"Ruud","insertion":"","lastnaam":"Greeven"}
+{"id":"123456","firstname":"Ruud","insertion":"","lastnaam":"Greven"}
 ]};
 ```
 
