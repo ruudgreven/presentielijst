@@ -62,7 +62,7 @@ Flight::route('POST /students\.json', function(){
       $sInsertion = $aStudent['insertion'];
       $sFirstname = $aStudent['firstname'];
   
-      $sQuery = "INSERT INTO student VALUES ($iId, \"$sLastname\", \"$sInsertion\", \"$sFirstname\");";
+      $sQuery = "INSERT INTO student VALUES ($iId, \"$sFirstname\", \"$sInsertion\", \"$sLastname\");";
   
       if ($oResult = $oMysqli->query($sQuery)) {
         if ($bFirst) {
