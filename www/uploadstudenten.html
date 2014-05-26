@@ -1,0 +1,49 @@
+<?php
+  require_once(dirname(__FILE__) . "/../config.inc.php");
+?>
+<html>
+<head>
+  <title>Presentielijst</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <base href="<?php echo BASE_URL ?>">
+  
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/presentielijst.css"/>
+    
+  <script src="js/jquery-1.11.0.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      var options = { 
+        target:   '#output',   // target element(s) to be updated with server response 
+        resetForm: true        // reset the form after successful submit 
+      }; 
+         
+      $('#studentuploadform').submit(function() { 
+        $(this).ajaxSubmit(options);        
+        return false; 
+      }); 
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div id="content">
+      <div class="row">
+        <div class="col-md-12">
+          <form action="api/students.json?bla=blub" method="post" enctype="multipart/form-data" id="studentuploadform">
+            <input name="csvfile" id="csvfile" type="file" />
+            <input type="submit"  id="submit-btn" value="Upload" />
+          </form>
+          
+          <div id="output">
+            Output
+         </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+

@@ -1,0 +1,8 @@
+Options -Indexes
+RewriteEngine On
+
+# Change the rewritebase to your base
+RewriteBase /~ruudgreven/presentielijst/api
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ api.php [QSA,L]
