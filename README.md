@@ -21,7 +21,7 @@ id;lastname;insertion;firstname;
 {"status": "ok", "response":[
 {"id":"123456","firstname":"Ruud","insertion":"","lastnaam":"Greeven"},
 {"id":"34567","firstname":"Henk","insertion":"van der","lastnaam":"Tillaart"}
-];
+]};
 ```
 
 
@@ -37,7 +37,7 @@ JSON and CSV
 {"status": "ok", "response":[
 {"id":"123456","firstname":"Ruud","insertion":"","lastnaam":"Greeven"},
 {"id":"34567","firstname":"Henk","insertion":"van der","lastnaam":"Tillaart"}
-];
+]};
 ```
 
 
@@ -52,7 +52,7 @@ JSON and CSV
 ```json
 {"status": "ok", "response":[
 {"id":"123456","firstname":"Ruud","insertion":"","lastnaam":"Greeven"}
-];
+]};
 ```
 
  
