@@ -39,14 +39,32 @@ function errorInFormat() {
   return "{\"status\": \"error\", \"message\": \"Error in database query\"}";
 }
 
+/**
+ * Authorize the user and return his user_id
+ * TODO: Implement
+ */
+function getAuthorizedUser() {
+  return 1;
+}
+
+/**
+ * Returns the organisation for the given name
+ * TODO: Implement
+ */
+function getOrganisationId() {
+  return 1;
+}
 // ============================================================================
 // STUDENT RESOURCE API CALLS
 // ============================================================================
 
 /**
- * Add students in CSV format and returns a list of added student in JSON format
+ * Add students in CSV format and returns a list of added student in JSON format. The students will belong to the default group
  */
 Flight::route('POST /students\.json', function(){
+  $iUserId = getAuthorizedUser();
+  $iOrganisationId = getOrganisationId();
+
   $oRequest = Flight::request();
   $sBody = $oRequest->body;
   $sFileName = $oRequest->files->csvfile['tmp_name'];
@@ -61,15 +79,24 @@ Flight::route('POST /students\.json', function(){
       $sLastname = $aStudent['lastname'];
       $sInsertion = $aStudent['insertion'];
       $sFirstname = $aStudent['firstname'];
-  
-      $sQuery = "INSERT INTO student VALUES ($iId, \"$sFirstname\", \"$sInsertion\", \"$sLastname\");";
+      
+      $sQuery = "INSERT INTO student VALUES ($iOrganisationId, $iId, \"$sFirstname\", \"$sInsertion\", \"$sLastname\");";
   
       if ($oResult = $oMysqli->query($sQuery)) {
         if ($bFirst) {
           $bFirst = false;
-          $sJson .= "{\"id\": $iId, \"lastname\": $sLastname, \"insertion\": $sInsertion, \"firstname\": $sFirstname}";
+          $sJson .= "{\"id\": $iId, \"lastname\": \"$sLastname\", \"insertion\": \"$sInsertion\", \"firstname\": \"$sFirstname\"}";
         } else {
-          $sJson .= ",{\"id\": $iId, \"lastname\": $sLastname, \"insertion\": $sInsertion, \"firstname\": $sFirstname}";
+          $sJson .= ",{\"id\": $iId, \"lastname\": \"$sLastname\", \"insertion\": \"$sInsertion\", \"firstname\": \"$sFirstname\"}";
+        }
+        
+        if (isset($aStudent['group'])) {
+          $sGroupName = $aStudent['group'];
+          $sQuery = "INSERT INTO groupset VALUES ($iOrganisationId, \"$sGroupName\", 0);";
+          $oMysqli->query($sQuery);
+          
+          $sQuery = "INSERT INTO groupsetstudents VALUES ($iOrganisationId, \"$sGroupName\", $iId);";
+          $oMysqli->query($sQuery);
         }
       }
   }
@@ -81,9 +108,9 @@ Flight::route('POST /students\.json', function(){
 /**
  * Get the list of all students in the given format
  */
-Flight::route('GET /students\.@sFormat', function($sFormat){
+Flight::route('GET /students\.@sFormat:[A-z]+', function($sFormat){
   $oMysqli = getMysqli();
-  $sQuery = "SELECT * FROM student;";    
+  $sQuery = "SELECT id, lastname, insertion, firstname FROM student;";    
   if ($oResult = $oMysqli->query($sQuery)) {
     echo dbResultToFormat($oResult, $sFormat); 
   } else {
@@ -94,17 +121,49 @@ Flight::route('GET /students\.@sFormat', function($sFormat){
 /**
  * Get the properties of one student in the given format
  */
-Flight::route('GET /students/@sStudentId\.@sFormat', function($sStudentId, $sFormat){
+Flight::route('GET /students/@sStudentId\.@sFormat:[A-z]+', function($sStudentId, $sFormat){
   $oMysqli = getMysqli();
   preg_match('/^[0-9]*$/', $sStudentId, $aMatches);
   $sStudentId = $aMatches[0];
-  $sQuery = "SELECT * FROM student WHERE id=$sStudentId;";    
+  $sQuery = "SELECT id, lastname, insertion, firstname FROM student WHERE id=$sStudentId;";    
   if ($oResult = $oMysqli->query($sQuery)) {
     echo dbResultToFormat($oResult, $sFormat); 
   } else {
     echo errorInFormat();
   }
 });
+
+
+// ============================================================================
+// GROUP RESOURCE API CALLS
+// ============================================================================
+/**
+ * Get a list of groups
+ */
+Flight::route('GET /groups\.@sFormat:[A-z]+', function($sFormat){
+  $oMysqli = getMysqli();
+  $sQuery = "SELECT name, owner_user_id FROM groupset;";    
+  if ($oResult = $oMysqli->query($sQuery)) {
+    echo dbResultToFormat($oResult, $sFormat); 
+  } else {
+    echo errorInFormat();
+  }
+});
+
+
+/**
+ * Get the groupmembers of the given group
+ */
+Flight::route('GET /groups/@sGroupName\.@sFormat:[A-z]+', function($sGroupName, $sFormat){
+  $oMysqli = getMysqli();
+  $sQuery = "SELECT student.id, student.lastname, student.insertion, student.firstname FROM student, groupsetstudents WHERE student.id = groupsetstudents.student_id AND LOWER(groupsetstudents.group_name) = LOWER(\"$sGroupName\");";    
+  if ($oResult = $oMysqli->query($sQuery)) {
+    echo dbResultToFormat($oResult, $sFormat); 
+  } else {
+    echo errorInFormat();
+  }
+});
+
 
 
 // ============================================================================
