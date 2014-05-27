@@ -1,0 +1,92 @@
+<html>
+<head>
+  <title>Presentielijst</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/select2.css"/>
+  <link rel="stylesheet" type="text/css" href="css/select2-bootstrap.css"/>
+  <link rel="stylesheet" type="text/css" href="css/presentielijst.css"/>
+    
+  <script src="js/jquery-1.11.0.min.js"></script>
+  <script src="js/select2.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+    	$("#activity_select").select2({
+				placeholder: "Type an activity name",
+				minimumInputLength: 1,
+				ajax: {
+      		url: "activities.json",
+      		dataType: 'json',
+      		data: function (term, page) {
+        		return {
+          		q: term
+        		};
+      		},
+      		results: function (data, page) {
+        		return { results: data };
+      		}
+    		},
+				
+			});
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div id="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="btn-group">
+						<button type="button" class="btn btn-default">1</button>
+						<button type="button" class="btn btn-default">2</button>
+
+						<div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+								Module
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Introductie Programmeren</a></li>
+								<li><a href="#">Mobile Computing</a></li>
+								<li><a href="#">Leren kennen</a></li>
+								<li><a href="#">Agile Development</a></li>
+							</ul>
+						</div>
+						
+						<div class="btn-group">
+							<select id="activity_select">
+							 <option value="AL">Alabama</option>
+							</select>
+						</div>
+						
+						<div class="btn-group">
+							<button type="button" id="group_dropdown" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+								Groepen
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="group_dropdown">
+								<li role="presentation" class="dropdown-header">Eigen groepen</li>
+								<li><a href="#">Mijn groep</a></li>
+								
+								<li role="presentation" class="divider"></li>
+								<li role="presentation" class="dropdown-header">Algemene groepen</li>
+								<li><a href="#">EIN1Vp</a></li>
+								<li><a href="#">EIN1Vq</a></li>
+								<li><a href="#">EIN1Vr</a></li>
+								<li><a href="#">EIN1Vs</a></li>
+								<li><a href="#">EIN1Vt</a></li>
+								<li><a href="#">EIN1Vu</a></li>
+							</ul>
+						</div>
+					</div>
+      	</div>
+    	</div>
+  	</div>
+  </div>
+</body>
+</html>
+
+
